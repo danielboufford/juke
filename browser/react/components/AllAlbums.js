@@ -2,28 +2,18 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-export default class AllAlbums extends Component {
-  constructor() {
-    super();
-    this.state = {
-      albums: []
-    }
-  }
+// Dumb b/c only renders
+const AllAlbums = (props) => {
 
-  componentDidMount () {
-    axios.get('/api/albums/')
-      .then(res => res.data)
-      .then(albums => {
-        this.setState({ albums })
-      });
-  }
+  // No this bc not constructor function
+  const albums = props.albums;
 
-  render () {
-    const albums = this.state.albums;
+  // render () {
+  //   const albums = this.state.albums;
 
     return (
       <div>
-        <h3>Albums</h3>
+        <h4>Albums</h4>
         <div className="row">
         {
           albums.map(album => (
@@ -44,4 +34,6 @@ export default class AllAlbums extends Component {
       </div>
     );
   }
-}
+
+
+export default AllAlbums;

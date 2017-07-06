@@ -23,7 +23,6 @@ export default class SingleAlbum extends Component {
 
   render () {
 
-
     const album = this.state.selectedAlbum;
 
     return (

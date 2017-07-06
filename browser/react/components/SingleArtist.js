@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
+import Songs from './songs'
+import AllAlbums from './AllAlbums';
 
 export default class SingleArtist extends Component {
   constructor() {
@@ -15,7 +17,6 @@ export default class SingleArtist extends Component {
   componentDidMount () {
 
     const artistId = this.props.match.params.artistId;
-
 
     axios.get(`/api/artists/${artistId}`)
       .then(res => res.data)
@@ -39,59 +40,39 @@ export default class SingleArtist extends Component {
 
   render () {
 
-    const artist = this.state.selectedArtist;
-    const albums = this.state.artistAlbums;
-    const songs = this.state.artistSongs;
-
-    console.log("albums", albums);
-    console.log("songs", songs);
+    const artist = this.state.selectedArtist; // or however you've named it
+    const artistId = this.props.match.params.artistId;
 
     return (
       <div>
-        <h3>{artist.name}</h3>
-        <h4>ALBUMS</h4>
-        {albums.map(album => (
-          <div className="col-xs-4" key={ album.id }>
-            <Link className="thumbnail" to={`/albums/${album.id}`}>
-              <img src={ album.imageUrl } />
-              <div className="caption">
-                <h5>
-                  <span>{ album.name }</span>
-                </h5>
-                <small>{ album.songs.length } songs</small>
-              </div>
-            </Link>
-          </div>
-        ))}
-          <table className='table'>
-            <thead>
-              <tr>
-                <th></th>
-                <th>Name</th>
-                <th>Artists</th>
-                <th>Genre</th>
-              </tr>
-            </thead>
-            <tbody>
-              {
-                songs && songs.map(song => (
-                  <tr key={song.id}>
-                    <td>
-                      <button className="btn btn-default btn-xs">
-                        <span className="glyphicon glyphicon-play"></span>
-                      </button>
-                    </td>
-                    <td>{ song.name }</td>
-                    <td>
-                      <span>{ song.artists ? song.artists.map(artist => artist.name).join(', ') : null }</span>
-                    </td>
-                    <td>{ song.genre }</td>
-                  </tr>
-                ))
-              }
-            </tbody>
-          </table>
+        <h3>{ artist.name }</h3>
+        <ul className="nav nav-tabs">
+          <li><Link to={`/artists/${artistId}/albums`}>ALBUMS</Link></li>
+          <li><Link to={`/artists/${artistId}/songs`}>SONGS</Link></li>
+        </ul>
+
+        <Route path="/artists/:artistId/albums" render={
+          (routeProps) => <AllAlbums albums={this.state.artistAlbums}
+          artistId={routeProps.match.params.artistId} />
+        } />
+        <Route path="/artists/:artistId/songs" render={
+          (routeProps) => <Songs songs={this.state.artistSongs}
+          artistId={routeProps.match.params.artistId} />
+        } />
+
       </div>
     );
+
+    // const artist = this.state.selectedArtist;
+    // const artistAlbums = this.state.artistAlbums;
+    // const artistSongs = this.state.artistSongs;
+
+    // return (
+    //   <div>
+    //       <AllAlbums albums={artistAlbums}/>
+    //       <Songs songs={artistSongs}/>          
+    //   </div>
+    // );
   }
 }
+ 

@@ -8,6 +8,16 @@ body {
 #main {
   padding-left: 0; }
 
+.newLine {
+  display: block;
+  clear: both;
+}
+
+.newLine:before {
+  content: "";
+  display: block;
+}
+
 sidebar {
   position: fixed;
   left: 0;

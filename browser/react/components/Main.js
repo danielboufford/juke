@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import AllAlbums from './AllAlbums';
+import StatefulAlbums from './StatefulAlbums';
 import AllArtists from './AllArtists';
 import SingleAlbum from './SingleAlbum';
 import SingleArtist from './SingleArtist';
@@ -22,8 +22,8 @@ export default class Main extends Component {
         </div>
 
           <div className="col-xs-10">
-            <Route exact path="/" component={AllAlbums}></Route>
-            <Route exact path="/albums" component={AllAlbums}></Route>
+            <Route exact path="/" component={StatefulAlbums}></Route>
+            <Route exact path="/albums" component={StatefulAlbums}></Route>
             <Route path="/albums/:albumId" component={SingleAlbum}></Route>
             <Route exact path="/artists" component={AllArtists}></Route>
             <Route path="/artists/:artistId" component={SingleArtist}></Route>
